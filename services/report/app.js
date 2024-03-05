@@ -24,7 +24,9 @@ async function printReport() {
 }
 
 async function consume() {
-    //TODO: Constuir a comunicação com a fila 
+    console.log(`Printando os dados da compra : ${process.env.RABBITMQ_QUEUE_NAME}`)
+    printReport()
+    await (await RabbitMQService.getInstance()).consume(process.env.RABBITMQ_QUEUE_NAME, (msg) => {processMessage(msg)})
 } 
 
 consume()
